@@ -1,5 +1,6 @@
 #Ignore __pycache__
 __pycache__
+modules/__pycache__
 
 #Ignore data
 data
