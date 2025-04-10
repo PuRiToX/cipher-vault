@@ -3,8 +3,12 @@
  Your digital keys, encrypted offline  
  A secure, open-source password manager for those who value true privacy
 
+<img alt="Program preview 1" src="images/cipher-vault-screenshot.png" width="500"/>
+
  CipherVault is an offline password manager designed for users who prioritize absolute security and privacy. Developed in Python, it offers a reliable alternative to cloud solutions through end-to-end military-grade encryption, local storage, and auditable open source code. Its multi-layered architecture combines bcrypt for authentication, PBKDF2 for key derivation, and AES-256 via Fernet, ensuring that even physical access to files does not compromise the data. 
  
+<img alt="Program preview 2" src="images/cipher-vault-screenshot-2.png" width="500"/>
+
  It operates completely offline, eliminating the risk of remote leakage, and protects data with advanced measures such as automatic encrypted backups, OS-level file protection, and secure master password rotation. The intuitive CLI interface allows you to manage credentials, generate strong passwords, and quickly search for entries, while its integrity system detects unauthorized modifications. 
  
  Ideal for security-conscious technicians and users, CipherVault operates without telemetry, external services, or cloud dependencies, storing everything locally in encrypted format. Its modular design and transparent documentation allow you to verify every aspect of its operation, offering digital peace of mind in a world of constant vulnerability.
@@ -50,6 +54,10 @@ cd cipher-vault/modules
 
 # Launch CipherVault
 python main.py
+
+# Install external python modules
+pip install bcrypt
+pip install cryptography
 
 ``` 
 ## 🔄 Usage Workflow
