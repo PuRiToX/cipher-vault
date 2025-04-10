@@ -62,7 +62,7 @@ def create_master_password():
     try:
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f)
-    except:
+    except FileNotFoundError:
         os.mkdir("data")
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f)
@@ -71,7 +71,7 @@ def create_master_password():
     key = Process.generate_fernet_key(password, salt)
     Process.save_vault([], key)
     
-    print("\n✅ Setup complete! Your vault is ready.")
+    print("\n✅ Setup complete! Your vault is ready. \nPlease restart the app.")
 
 # Authentication
 def login():
