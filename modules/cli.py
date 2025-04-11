@@ -2,9 +2,9 @@
 
 from getpass import getpass
 import os
+
 import security
 import vault
-import process
 
 # Configuration files
 CONFIG_FILE = 'data/config.json'
