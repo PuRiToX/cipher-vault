@@ -72,3 +72,34 @@ def change_password(vault_data, current_key):
     print("\n✅ Password updated successfully!")
     return new_key  # Returns the new key for future operations
 
+def strong_pass(password):
+    issues = []
+    
+    if not password:
+        print("\nThe password cannot be empty")
+        return False
+
+    # Minimum lenght
+    if len(password) < 8:
+        issues.append("Must have at least 8 characters")
+    
+    # Uppercase and lowercase
+    if not any(c.isupper() for c in password):
+        issues.append("Must contain at least one capital letter")
+    if not any(c.islower() for c in password):
+        issues.append("Must contain at least one lowercase letter")
+    
+    # Numbers and special characters
+    if not any(c.isdigit() for c in password):
+        issues.append("Must include at least one number")
+    if not any(not c.isalnum() for c in password):
+        issues.append("Must include at least one special character (ej. !@#)")
+    
+    # Show results
+    if not issues:
+        return True
+    else:
+        print("🔴 The password has problems encountered:")
+        for issue in issues:
+            print(f"- {issue}")
+        return False
