@@ -52,12 +52,12 @@
 git clone https://github.com/puritox/cipher-vault.git
 cd cipher-vault/
 
-# Launch CipherVault
-python main.py
-
 # Install external python modules
 pip install bcrypt
 pip install cryptography
+
+# Launch CipherVault
+python main.py
 
 ``` 
 ## 🔄 Usage Workflow

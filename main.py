@@ -13,8 +13,10 @@ from cryptography.hazmat.backends import default_backend
 modules_route = Path(__file__).parent / "modules"  # __file__ is the actual file rute (main.py)
 sys.path.append(str(modules_route))
 
-from security import Security
-from process import Process
+#Local Modules
+from modules import security
+from modules import cli
+from modules import vault
 
 # Configuration files
 CONFIG_FILE = 'data/config.json'
@@ -22,7 +24,7 @@ VAULT_FILE = 'data/vault.json'
 
 # Main Function
 def main():
-    clean_terminal() 
+    cli.clean_terminal() 
 
     if not os.path.exists(CONFIG_FILE):
         create_master_password()
@@ -30,15 +32,7 @@ def main():
         login_result = login()
         if login_result:
             vault_data, key = login_result
-            show_menu(vault_data, key)
-
-def clean_terminal():
-    # For Windows
-    if os.name == 'nt':
-        os.system('cls')
-    # For Unix/Linux/MacOS
-    else:
-        os.system('clear')
+            cli.show_menu(vault_data, key)
 
 # Create master password
 def create_master_password():
@@ -73,8 +67,8 @@ def create_master_password():
             json.dump(config, f)
 
     # Create empty vault
-    key = Process.generate_fernet_key(password, salt)
-    Process.save_vault([], key)
+    key = security.generate_fernet_key(password, salt)
+    vault.save_vault([], key)
     
     print("\n✅ Setup complete! Your vault is ready. \nPlease restart the app.")
 
@@ -100,7 +94,7 @@ def login():
         print("\n❌ Incorrect password")
         return None
     
-    key = Process.generate_fernet_key(password, salt)
+    key = security.generate_fernet_key(password, salt)
     
     try:
         with open(VAULT_FILE, 'r') as f:
@@ -122,53 +116,7 @@ def login():
     
     return (vault_data, key)
 
-# Show menu
-def show_menu(vault_data, key):
-    while True:
-
-        print("\n📁 Main Menu 📁")
-        print("1. ➕ Add new password")
-        print("2. 📋 See all services")
-        print("3. 🔍 Search for password")
-        print("4. 🔄 Change master password")
-        print("5. ⚠️ Vault reset")
-        print("6. 🚪 Go out")
-        
-        choice = input("\nChoose an option: ")
-        clean_terminal()
-        wait = ''
-        
-        if choice == '1':
-            Security.add_password(vault_data, key)
-            wait = input("\nPress Enter to continue...")
-            clean_terminal()
-        elif choice == '2':
-            Security.list_services(vault_data)
-            wait = input("\nPress Enter to continue...")
-            clean_terminal()
-        elif choice == '3':
-            Security.find_password(vault_data)
-            wait = input("\nPress Enter to continue...")
-            clean_terminal()
-        elif choice == '4':
-            new_key = Security.change_password(vault_data, key)
-            if new_key:
-                key = new_key  # Actualizamos la clave en memoria
-            wait = input("\nPress Enter to continue...")
-            clean_terminal()    
-        elif choice == '5':
-            if Security.factory_reset():
-                print("\n✅ Vault deleted! Please restart the app.")
-                return  # Salimos sin guardar
-            wait = input("\nPress Enter to continue...")
-            clean_terminal() 
-        elif choice == '6':
-            Process.save_vault(vault_data, key)
-            print("\n✅ Your vault is safe! See you soon.")
-            break
-        else:
-            print("\n❌ Invalid option. Please try again.")
-
+    cli.show_menu
 
 if __name__ == "__main__":
     main()
