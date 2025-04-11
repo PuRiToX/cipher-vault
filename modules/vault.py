@@ -80,6 +80,9 @@ def add_password(vault_data, key):
     service = input("Service name: ")
     username = input("Username: ")
     password = getpass("Password: ")
+    if not password:
+        print("\nThe password cannot be empty")
+        return None
 
     vault_data.append({
         "service": service,

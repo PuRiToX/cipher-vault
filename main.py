@@ -40,12 +40,19 @@ def create_master_password():
     print("\n⚠️ It is important not to forget the master password. ⚠️\nDo not share it with anyone or your data will be vulnerable.")
     print("\nFor more information about the program, visit the following repository: ")
     print("https://github.com/PuRiToX/strong-pass")
+
     while True:
         password = getpass("\nCreate your master password: ")
-        confirm = getpass("Confirm your master password: ")
-        if password == confirm:
-            break
-        print("❌ The passwords don't match! Please try again.")
+        is_valid = security.strong_pass(password)
+        if is_valid:
+            confirm = getpass("Confirm your master password: ")
+            if password == confirm:
+                break
+            print("❌ The passwords don't match! Please try again.")
+        else: 
+            wait = input("Press Enter to retry...")
+            cli.clean_terminal()
+
 
     # Generate bcrypt hash
     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
@@ -116,7 +123,7 @@ def login():
     
     return (vault_data, key)
 
-    cli.show_menu
+    cli.show_menu()
 
 if __name__ == "__main__":
     main()
