@@ -50,7 +50,7 @@
 ```bash
 # Clone repository
 git clone https://github.com/puritox/cipher-vault.git
-cd cipher-vault/modules
+cd cipher-vault/
 
 # Launch CipherVault
 python main.py

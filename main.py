@@ -1,3 +1,5 @@
+import sys
+from pathlib import Path
 import bcrypt
 import json
 import os
@@ -7,6 +9,9 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
+
+modules_route = Path(__file__).parent / "modules"  # __file__ is the actual file rute (main.py)
+sys.path.append(str(modules_route))
 
 from security import Security
 from process import Process
